@@ -1,0 +1,46 @@
+Q:sin^2 A
+A:1 - cos^2 A
+Q:cos^2 A
+A:1 - sin^2 A
+Q:sec A
+A:\\frac {1} {cos A}
+Q:cosec A
+A:\\frac {1} {sin A}
+Q:cot A
+A:\\frac {1} {tan A}
+Q:cot A
+A:\\frac {cos A} {sin A}
+Q:1 + tan^2 A
+A:sec^2 A
+Q:1 + cot^2 A
+A:cosec^2 A
+Q:sin(A + B)
+A:sinAcosB + sinBcosA
+Q:sin(A - B)
+A:sinAcosB - sinBcosA
+Q:cos(A + B)
+A:cosAcosB - sinAsinB
+Q:cos(A - B)
+A:cosAcosB + sinAsinB
+Q:tan(A + B)
+A:\frac {tanA + tanB} {1 - tanAtanB}
+Q:tan(A - B)
+A:\frac {tanA - tanB} {1 + tanAtanB}
+Q:sin2A
+A:2sinAcosA
+Q:cos2A
+A:cos^2A - sin^2A
+Q:cos2A
+A:1 - 2sin^2A
+Q:Rsin(A \pm \alpha)
+A:sinAcos \alpha \pm sin \alpha cosA
+Q:Rcos(A \pm \alpha)
+A:cosAcos \alpha \pm sin \alpha sinA
+Q:sinA + sinB
+A:2sin \frac {A+B} {2} cos \frac {A-B} {2}
+Q:sinA - sinB
+A:2cos \frac {A+B} {2} sin \frac {A-B} {2}
+Q:cosA + cosB
+A:2cos \frac {A+B} {2} cos \frac {A-B} {2}
+Q:cosA - cosB
+A:-2sin \frac {A+B} {2} sin \frac {A-B} {2}
