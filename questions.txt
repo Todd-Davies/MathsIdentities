@@ -3,7 +3,7 @@ A:1 - cos^2 A
 Q:cos^2 A
 A:1 - sin^2 A
 Q:sec A
-A:\\frac {1} {cos A}
+A:\frac {1} {cos A}
 Q:cosec A
 A:\frac {1} {sin A}
 Q:cot A
