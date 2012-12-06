@@ -1,7 +1,4 @@
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -20,29 +17,39 @@ import org.scilab.forge.jlatexmath.TeXIcon;
 /**
  * A program to convert flashcards written in LATEX into printable .png files 
  * @author Todd Davies <todd434@gmail.com>
- * TODO: comment and clean the code
  */
 public class Main {
 	
+	//Variables
 	private final static int TILEWIDTH = 450;
 	private final static int TILEHEIGHT = 150;
+	private final static int TILEMARGIN = 10;
+	private final static Color TILEMARGINCOLOR = Color.BLACK;
 	private final static int COLUMNS = 3;	
-	private static ArrayList<Question> questions = new ArrayList<Question>();
 	private final static String URL = "github.com/Todd-Davies/MathsIdentities";
+	private final static String COPYRIGHT_NOTICE = "Todd Davies 2012";
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		questions = new ArrayList<Question>();
+		ArrayList<Question> questions = new ArrayList<Question>();
 		
+		//Try reading the question file
 		try {
 			questions = parseInputQuestions("questions.txt");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		int rows = ((questions.size()%COLUMNS)==0 ? (questions.size()/COLUMNS) : (questions.size()/COLUMNS)+1 );
+		//Stop if there's no questions
+		if(questions.size()==0) {
+			System.out.println("No questions found");
+			return;
+		}
+		
+		//Add the cover to the beginning of the question list
+		questions.add(0, getCoverQuestion());
+		
+		//Find out how many rows we need for our questions
+		int rows = ((questions.size()%COLUMNS)==0 ? ((questions.size()<4) ? 1 : questions.size()/COLUMNS) : (questions.size()/COLUMNS)+1 );
 
 		//Print the first side
 		BufferedImage firstSide = new BufferedImage(TILEWIDTH*COLUMNS, TILEHEIGHT*rows, BufferedImage.TYPE_4BYTE_ABGR);
@@ -52,7 +59,8 @@ public class Main {
 		for(int i=0;i<questions.size();i++) {
 			BufferedImage tile = printTextToImage(questions.get(i).getSide1());
 			firstSideGraphics.drawImage(tile, TILEWIDTH*(i%COLUMNS), TILEHEIGHT*row, null);
-			if((i%COLUMNS)==2) {
+			//If we've reached the end of the row, then increment the row count
+			if((i%COLUMNS)==(COLUMNS-1)) {
 				row++;
 			}
 		}
@@ -66,7 +74,8 @@ public class Main {
 			//Swap the first and last columns
 			int widthPos = COLUMNS - ((i%COLUMNS)+1);
 			secondSideGraphics.drawImage(tile, TILEWIDTH*widthPos, TILEHEIGHT*row, null);
-			if((i%COLUMNS)==2) {
+			//If we've reached the end of the row, then increment the row count
+			if((i%COLUMNS)==(COLUMNS-1)) {
 				row++;
 			}
 		}
@@ -82,6 +91,12 @@ public class Main {
 		
 	}
 
+	/**
+	 * Reads the question file and parses it into questions
+	 * @param questionFile the path of a text file containing questions
+	 * @return an ArrayList of Questions
+	 * @throws Exception when the file can't be read usually
+	 */
 	private static ArrayList<Question> parseInputQuestions(String questionFile) throws Exception {
 		ArrayList<Question> output = new ArrayList<Question>();
 		BufferedReader br = new BufferedReader(new FileReader(questionFile));
@@ -107,14 +122,21 @@ public class Main {
 	    } finally {
 	        br.close();
 	    }
-	    output.add(getCoverQuestion());
 	    return output;
 	}
 	
+	/**
+	 * Gets the 'cover question' for the set
+	 */
 	private static Question getCoverQuestion() {
-		return new Question("{\\small \\copyright Todd Davies 2012}", "{\\tiny " + URL + "}");
+		return new Question("{\\small \\copyright " + COPYRIGHT_NOTICE + "}", "{\\tiny " + URL + "}");
 	}
 
+	/**
+	 * Prints the LATEX string into an image
+	 * @param s the LATEX formatted string
+	 * @return a BufferedImage of the question
+	 */
 	private static BufferedImage printTextToImage(String s) {
 		TeXFormula fomule = new TeXFormula(s);
 		TeXIcon ti = fomule.createTeXIcon(
@@ -123,6 +145,8 @@ public class Main {
 		int marginHeight = ((TILEHEIGHT - ti.getIconHeight())/2);
 		BufferedImage b = new BufferedImage(TILEWIDTH, TILEHEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics g = b.getGraphics();
+		g.setColor(TILEMARGINCOLOR);
+		g.drawRect(TILEMARGIN/2, TILEMARGIN/2, TILEWIDTH-TILEMARGIN, TILEHEIGHT-TILEMARGIN);
 		ti.paintIcon(new JLabel(), g, marginWidth, marginHeight);
 		return b;
 	}
