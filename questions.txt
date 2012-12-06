@@ -5,11 +5,11 @@ A:1 - sin^2 A
 Q:sec A
 A:\\frac {1} {cos A}
 Q:cosec A
-A:\\frac {1} {sin A}
+A:\frac {1} {sin A}
 Q:cot A
-A:\\frac {1} {tan A}
+A:\frac {1} {tan A}
 Q:cot A
-A:\\frac {cos A} {sin A}
+A:\frac {cos A} {sin A}
 Q:1 + tan^2 A
 A:sec^2 A
 Q:1 + cot^2 A
