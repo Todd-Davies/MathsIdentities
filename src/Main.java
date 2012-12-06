@@ -1,10 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -46,7 +48,7 @@ public class Main {
 		}
 		
 		//Add the cover to the beginning of the question list
-		questions.add(0, getCoverQuestion());
+		questions.add(0, getCoverQuestion().setCornerImage("github-logo.png"));
 		
 		//Find out how many rows we need for our questions
 		int rows = ((questions.size()%COLUMNS)==0 ? ((questions.size()<4) ? 1 : questions.size()/COLUMNS) : (questions.size()/COLUMNS)+1 );
@@ -57,7 +59,19 @@ public class Main {
 		int row = 0;
 		//Print first side: 
 		for(int i=0;i<questions.size();i++) {
-			BufferedImage tile = printTextToImage(questions.get(i).getSide1());
+			Question q = questions.get(i);
+			BufferedImage tile = printTextToImage(q.getSide1());
+			//If we've got a logo, then write it to the image
+			if(questions.get(i).getCornerImage()!=null) {
+				try {
+					Image img = null;
+					img = ImageIO.read(new File(q.getCornerImage()));
+					tile.getGraphics().drawImage(img, TILEWIDTH-TILEMARGIN-1-img.getWidth(null), TILEHEIGHT-TILEMARGIN-1-img.getHeight(null), null);
+				} catch (IOException e) {
+					System.out.println("Failed to draw logo image");
+				}
+			}
+			//Draw the tile to the side
 			firstSideGraphics.drawImage(tile, TILEWIDTH*(i%COLUMNS), TILEHEIGHT*row, null);
 			//If we've reached the end of the row, then increment the row count
 			if((i%COLUMNS)==(COLUMNS-1)) {
@@ -70,9 +84,21 @@ public class Main {
 		//Print second side
 		row = 0;
 		for(int i=0;i<questions.size();i++) {
-			BufferedImage tile = printTextToImage(questions.get(i).getSide2());
+			Question q = questions.get(i);
+			BufferedImage tile = printTextToImage(q.getSide2());
 			//Swap the first and last columns
 			int widthPos = COLUMNS - ((i%COLUMNS)+1);
+			//If we've got a logo, then write it to the image
+			if(questions.get(i).getCornerImage()!=null) {
+				try {
+					Image img = null;
+					img = ImageIO.read(new File(q.getCornerImage()));
+					tile.getGraphics().drawImage(img, TILEWIDTH-TILEMARGIN-1-img.getWidth(null), TILEHEIGHT-TILEMARGIN-1-img.getHeight(null), null);
+				} catch (IOException e) {
+					System.out.println("Failed to draw logo image");
+				}
+			}
+			//Draw the tile to the side
 			secondSideGraphics.drawImage(tile, TILEWIDTH*widthPos, TILEHEIGHT*row, null);
 			//If we've reached the end of the row, then increment the row count
 			if((i%COLUMNS)==(COLUMNS-1)) {

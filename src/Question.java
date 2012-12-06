@@ -3,6 +3,7 @@ public class Question {
 
 	private String side1 = "";
 	private String side2 = "";
+	private String cornerImage = null;
 	
 	public Question(String side1, String side2) {
 		this.side1 = side1;
@@ -22,6 +23,13 @@ public class Question {
 	}
 	public String getLatexString() {
 		return side1 + " = " + side2;
+	}
+	public String getCornerImage() {
+		return cornerImage;
+	}
+	public Question setCornerImage(String cornerImage) {
+		this.cornerImage = cornerImage;
+		return this;
 	}
 	
 	
