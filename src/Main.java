@@ -1,3 +1,7 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -20,10 +24,11 @@ import org.scilab.forge.jlatexmath.TeXIcon;
  */
 public class Main {
 	
-	private final static int tileWidth = 450;
-	private final static int tileHeight = 150;
-	private final static int columns = 3;	
+	private final static int TILEWIDTH = 450;
+	private final static int TILEHEIGHT = 150;
+	private final static int COLUMNS = 3;	
 	private static ArrayList<Question> questions = new ArrayList<Question>();
+	private final static String URL = "github.com/Todd-Davies/MathsIdentities";
 
 	/**
 	 * @param args
@@ -37,31 +42,31 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		int rows = ((questions.size()%columns)==0 ? (questions.size()/columns) : (questions.size()/columns)+1 );
+		int rows = ((questions.size()%COLUMNS)==0 ? (questions.size()/COLUMNS) : (questions.size()/COLUMNS)+1 );
 
 		//Print the first side
-		BufferedImage firstSide = new BufferedImage(tileWidth*columns, tileHeight*rows, BufferedImage.TYPE_4BYTE_ABGR);
+		BufferedImage firstSide = new BufferedImage(TILEWIDTH*COLUMNS, TILEHEIGHT*rows, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics firstSideGraphics = firstSide.getGraphics();
 		int row = 0;
 		//Print first side: 
 		for(int i=0;i<questions.size();i++) {
-			BufferedImage tile = printQuestion(questions.get(i).getSide1());
-			firstSideGraphics.drawImage(tile, tileWidth*(i%columns), tileHeight*row, null);
-			if((i%columns)==2) {
+			BufferedImage tile = printTextToImage(questions.get(i).getSide1());
+			firstSideGraphics.drawImage(tile, TILEWIDTH*(i%COLUMNS), TILEHEIGHT*row, null);
+			if((i%COLUMNS)==2) {
 				row++;
 			}
 		}
 		
-		BufferedImage secondSide = new BufferedImage(tileWidth*columns, tileHeight*rows, BufferedImage.TYPE_4BYTE_ABGR);
+		BufferedImage secondSide = new BufferedImage(TILEWIDTH*COLUMNS, TILEHEIGHT*rows, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics secondSideGraphics = secondSide.getGraphics();
 		//Print second side
 		row = 0;
 		for(int i=0;i<questions.size();i++) {
-			BufferedImage tile = printQuestion(questions.get(i).getSide2());
+			BufferedImage tile = printTextToImage(questions.get(i).getSide2());
 			//Swap the first and last columns
-			int widthPos = columns - ((i%columns)+1);
-			secondSideGraphics.drawImage(tile, tileWidth*widthPos, tileHeight*row, null);
-			if((i%columns)==2) {
+			int widthPos = COLUMNS - ((i%COLUMNS)+1);
+			secondSideGraphics.drawImage(tile, TILEWIDTH*widthPos, TILEHEIGHT*row, null);
+			if((i%COLUMNS)==2) {
 				row++;
 			}
 		}
@@ -102,17 +107,23 @@ public class Main {
 	    } finally {
 	        br.close();
 	    }
+	    output.add(getCoverQuestion());
 	    return output;
 	}
+	
+	private static Question getCoverQuestion() {
+		return new Question("{\\small \\copyright Todd Davies 2012}", "{\\tiny " + URL + "}");
+	}
 
-	private static BufferedImage printQuestion(String s) {
+	private static BufferedImage printTextToImage(String s) {
 		TeXFormula fomule = new TeXFormula(s);
 		TeXIcon ti = fomule.createTeXIcon(
 		TeXConstants.STYLE_DISPLAY, 40);
-		int marginWidth = ((tileWidth - ti.getIconWidth())/2);
-		int marginHeight = ((tileHeight - ti.getIconHeight())/2);
-		BufferedImage b = new BufferedImage(tileWidth, tileHeight, BufferedImage.TYPE_4BYTE_ABGR);
-		ti.paintIcon(new JLabel(), b.getGraphics(), marginWidth, marginHeight);
+		int marginWidth = ((TILEWIDTH - ti.getIconWidth())/2);
+		int marginHeight = ((TILEHEIGHT - ti.getIconHeight())/2);
+		BufferedImage b = new BufferedImage(TILEWIDTH, TILEHEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
+		Graphics g = b.getGraphics();
+		ti.paintIcon(new JLabel(), g, marginWidth, marginHeight);
 		return b;
 	}
 
