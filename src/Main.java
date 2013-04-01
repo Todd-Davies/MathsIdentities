@@ -23,13 +23,13 @@ import org.scilab.forge.jlatexmath.TeXIcon;
 public class Main {
 	
 	//Variables
-	private final static int TILEWIDTH = 450;
+	private final static int TILEWIDTH = 530;
 	private final static int TILEHEIGHT = 150;
 	private final static int TILEMARGIN = 10;
 	private final static Color TILEMARGINCOLOR = Color.BLACK;
 	private final static int COLUMNS = 3;	
 	private final static String URL = "github.com/Todd-Davies/MathsIdentities";
-	private final static String COPYRIGHT_NOTICE = "Todd Davies 2012";
+	private final static String COPYRIGHT_NOTICE = "Todd Davies 2013";
 
 	public static void main(String[] args) {
 		ArrayList<Question> questions = new ArrayList<Question>();

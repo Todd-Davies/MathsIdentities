@@ -44,3 +44,47 @@ Q:cosA + cosB
 A:2cos \frac {A+B} {2} cos \frac {A-B} {2}
 Q:cosA - cosB
 A:-2sin \frac {A+B} {2} sin \frac {A-B} {2}
+Q:\int x^n
+A:\frac{x^{n+1}}{n+1}+C
+Q:\int e^x
+A:e^x + C
+Q:\int \frac{1}{x}
+A:ln|x| + C
+Q:\int cos(x)
+A:sinx(x) + C
+Q:\int sin(x)
+A:-cos(x) + C
+Q:\int sec^2(x)
+A:tan(x) + C
+Q:\int cosec(x)cot(x)
+A:-cosec(x) + C
+Q:\int cosec^2(x)
+A:-cot(x) + C
+Q:\int sec(x)tan(x)
+A:sec(x) + C
+Q:\int (ax+b)^ndx
+A:\frac{1}{a}\frac{(ax+b)^{n+1}}{n+1} + C
+Q:\int e^{ax+b}dx
+A:\frac{1}{a}e^{ax+b} + C
+Q:\int \frac{1}{ax+b}dx
+A:\frac{1}{a}ln|ax+b| + C
+Q:\int cos(ax+b)dx 
+A:\frac{1}{a}sin(ax+b) + C
+Q:\int sin(ax+b)dx 
+A:-\frac{1}{a}cos(ax+b) + C
+Q:\int sec^2(ax+b)dx
+A:\frac{1}{a}tan(ax+b) + C
+Q:\int cosec(ax+b)cot(ax+b)dx
+A:-\frac{1}{a}cosec(ax+b) + C
+Q:\int cosec(ax+b)^2dx
+A:-\frac{1}{a}cot(ax+b) + C
+Q:\int sec(ax+b)tan(ax+b)dx
+A:\frac{1}{a}sec(ax+b) + C
+Q:\int tan(x)dx
+A:ln|sec(x)| + C
+Q:\int sec(x)dx
+A:ln|sec(x)+tan(x)| + C
+Q:\int cot(x)dx
+A:ln|sin(x)| + C
+Q:\int cosec(x)dx
+A:-ln|cosec(x)+cot(x)|+C
